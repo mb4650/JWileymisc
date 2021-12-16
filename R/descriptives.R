@@ -567,6 +567,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("dv1", "dv2"))
 #'   idvar = "Chick", paired = TRUE)
 #'
 #' rm(tmp)
+library("RVAideMemoire")
 egltable <- function(vars, g, data, idvar, strict=TRUE, parametric = TRUE,
                      paired = FALSE, simChisq = FALSE, sims = 1e6L) {
   if (!missing(data)) {
@@ -752,10 +753,10 @@ egltable <- function(vars, g, data, idvar, strict=TRUE, parametric = TRUE,
             }
           } else {
             if (isFALSE(paired)) {
-            tests <- kruskal.test(dv ~ g, data = data.frame(dv = dat[[v]], g = g))
+            tests <- mood.medtest(dv ~ g, data = data.frame(dv = dat[[v]]))
             out <- cbind(out,
-                         Test = c(sprintf("KW chi-square = %0.2f, df = %d, %s",
-                                          tests$statistic, tests$parameter,
+                         Test = c(sprintf("Mood's Median Test = %0.2f, %s",
+                                          tests$statistic,
                                           formatPval(tests$p.value, 3, 3, includeP=TRUE)),
                                   rep("", nrow(out) - 1)))
             } else if (isTRUE(length(levels(g)) == 2) && isTRUE(paired)) {
