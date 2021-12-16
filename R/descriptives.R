@@ -567,7 +567,6 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("dv1", "dv2"))
 #'   idvar = "Chick", paired = TRUE)
 #'
 #' rm(tmp)
-library("RVAideMemoire")
 egltable <- function(vars, g, data, idvar, strict=TRUE, parametric = TRUE,
                      paired = FALSE, simChisq = FALSE, sims = 1e6L) {
   if (!missing(data)) {
@@ -616,7 +615,7 @@ egltable <- function(vars, g, data, idvar, strict=TRUE, parametric = TRUE,
       (is.integer(x) | is.numeric(x)) &
         ((length(unique(x)) > 3) | strict)
   }))
-
+  
   catvars.index <- which(!contvars.index)
   contvars.index <- which(contvars.index)
 
@@ -689,7 +688,7 @@ egltable <- function(vars, g, data, idvar, strict=TRUE, parametric = TRUE,
     return(tmpres)
   })
 
-
+  library("RVAideMemoire")
   if (isTRUE(length(levels(g)) > 1)) {
     tmpout <- lapply(seq_along(vnames), function(v) {
 
